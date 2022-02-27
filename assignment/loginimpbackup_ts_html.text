@@ -1,0 +1,96 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../../shared/api.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/shared/auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  formValue!:FormGroup;
+  showButton:boolean=true;
+  constructor(private formBuilder:FormBuilder,private _api:ApiService, private _auth:AuthService, private router: Router) { }
+  badgeDanger:boolean=false;
+  ngOnInit(): void {
+    this.formValue = this.formBuilder.group({
+      userName:[''],
+      password:[''],
+   })
+
+  }
+  onSubmit(): void {
+    this.showButton = false;
+    if (this.formValue.valid) {
+      this._auth.login(this.formValue.value).subscribe(
+        (result:any) => {
+          console.log("result",result);
+          if(result===true){
+            this.badgeDanger=false;
+            this.router.navigate(['/home']);
+          }else{
+            this.badgeDanger=true;
+          }
+        },
+        (err: Error) => {
+          this.badgeDanger=true;
+          alert(err.message);
+        }
+      );
+    }
+    setTimeout(()=>{
+      this.showButton = true;
+    },2000)
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="custom-card">
+  <h3>USER LOGIN</h3>
+  <form [formGroup]="formValue" (submit)="onSubmit()">
+    <div class="form-group">
+      <p  *ngIf="badgeDanger" class="badge-custom">User Name Or Password is Wrong</p>
+
+    </div>
+    <div class="form-group">
+      <label >Customer Name</label>
+      <input type="text" class="form-control" formControlName="userName"  placeholder="Enter Name">
+    </div>
+    <div class="form-group">
+      <label >Password</label>
+      <input type="password" class="form-control" formControlName="password"   placeholder="Enter Password">
+    </div>
+
+    <button type="submit" class="btn btn-primary" *ngIf="showButton">Login</button>
+    <button class="btn btn-primary" *ngIf="!showButton">Wait...</button>
+
+  </form>
+</div>
+  // onSubmit(){
+  //   this._api.userLogin().subscribe(res=>{
+  //    const user = res.find((a:any)=>{
+  //       return a.userName === this.formValue.value.userName && a.password ===  this.formValue.value.password
+  //    })
+
+  //  })
+  //  console.log("user")
+  // }
+
+}

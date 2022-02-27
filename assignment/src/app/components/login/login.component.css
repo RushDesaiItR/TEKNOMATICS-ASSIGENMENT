@@ -1,0 +1,11 @@
+.custom-card{
+  width: 30%;
+  padding: 10px;
+  margin:5% auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.badge-custom{
+ background-color: red;
+ color: white;
+ padding: 10px;
+}

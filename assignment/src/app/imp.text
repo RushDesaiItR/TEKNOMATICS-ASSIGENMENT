@@ -1,0 +1,55 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../../shared/api.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/shared/auth.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  formValue!:FormGroup;
+  passwordPattern=""
+  constructor(private formBuilder:FormBuilder,private _api:ApiService, private _auth:AuthService, private router: Router) { }
+  badgeDanger:boolean=false;
+  ngOnInit(): void {
+    this.formValue = this.formBuilder.group({
+      userName:[''],
+      password:[''],
+   })
+
+  }
+  onSubmit(): void {
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    if (this.formValue.valid) {
+      this._auth.login(this.formValue.value).subscribe(
+        (result:any) => {
+          console.log("result",result);
+          if(result===true){
+            this.badgeDanger=false;
+            this.router.navigate(['/home']);
+          }else{
+            this.badgeDanger=true;
+          }
+        },
+        (err: Error) => {
+          this.badgeDanger=true;
+          alert(err.message);
+        }
+      );
+    }
+  }
+  // onSubmit(){
+  //   this._api.userLogin().subscribe(res=>{
+  //    const user = res.find((a:any)=>{
+  //       return a.userName === this.formValue.value.userName && a.password ===  this.formValue.value.password
+  //    })
+
+  //  })
+  //  console.log("user")
+  // }
+
+}

@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": 3,
+      "name": "Rushikesh Desai",
+      "email": "rushikeshmahavirdesaitwo@gmail.com",
+      "mobile": "9890436254",
+      "address": "NEAR JAIN TEMPLAE  SHAHUNAGAR",
+      "service": "jhjk"
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  },
+  "customers": [
+    {
+      "id": 1,
+      "customerName": "Rushikesh Desai",
+      "projectName": "HDB Project",
+      "globalMaster": "HDB_MASTER",
+      "indicator": "12PUHS",
+      "technicalPerson": "Ninad Shinde",
+      "forcastGenrated": "4000db"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "userName": "admin@test.com",
+      "password": "Admin123!"
+    }
+  ]
+}
